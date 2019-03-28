@@ -1,10 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include<vector>
-#include <algorithm>
 #include <random>
 #include <ctime>
-#include <utility>
 
 using namespace std;
 
@@ -15,55 +12,26 @@ void Sort(int m[],int n);
 int main()
 {
     generator();
-    /*unsigned int buffsize=1024*1024;
 
-    int buffer[buffsize];
-    int i=1;
-    FILE* ptrfile=fopen("file.bin","rb");
-    while(!feof(ptrfile))
-    {
-    fread(buffer,sizeof(int),buffsize,ptrfile);
-    Sort(buffer,buffsize);
-    ofstream out("file"+to_string(i)+".bin",ios::binary);
-    for(int k=0;k<buffsize;k++)
-    out.write((char*)&buffer[k],sizeof(int));
-    i++;
-    }
-    fclose(ptrfile);*/
+    ifstream fileStrmIn("file.bin",ios::binary);
+    if(!fileStrmIn) cout<<"fail is not open\n";
 
-    ifstream in("file.bin",ios::binary);
-    unsigned int buffsize=1024;
-    uint32_t buff[buffsize];
-    int i=1;
-    unsigned int j=0;
-    in.seekg(0, in.end);
-    unsigned int lenght = in.tellg();
-    in.seekg(0,in.beg);
-    unsigned int cnt = lenght/buffsize;
-    while (in && j<cnt)
-    {
-        //in.seekg(0, in.end);
-        //int lenght = in.tellg();
-        //in.seekg(0,in.beg);
-        //cout<<lenght;
-    //in.read(buff, buffsize);
-    in.read(reinterpret_cast<char *>(buff), buffsize);
-    ofstream out("file"+to_string(i)+".bin",ios::binary);
-    for(unsigned int k=0;k<buffsize;k++){out.write((char*)&buff[k],sizeof(uint32_t)); cout<<&buff[k]<<endl;}
-    out.close();
-    i++; j++;
+    cout<<"fail is open\n";
+
+    unsigned int b;
+    int j=1;
+    while(fileStrmIn){
+        ofstream out("file"+to_string(j)+".bin",ios::binary);
+        cout<<"file "<<j<<"is open\n";
+        for(int i=0;i<134217728;i++){
+             fileStrmIn.read((char*)&b,sizeof(int));
+             out.write((char*)&b,sizeof(int));
+        }
+        out.close();
+        j++;
     }
-    in.close();
-    /*unsigned int b;
-    for(int j=1;j<=i;j++)
-    {
-    cout<<"file "<<j<<":\n";
-    ifstream in1("file"+to_string(j)+".bin",ios::binary);
-    while(in1.read((char*)&b,sizeof(int)))
-    cout<<b<<" ";
-    in1.close();
-    cout<<endl;
-    }*/
+    fileStrmIn.close();
+
 
     return 0;
 }
@@ -75,7 +43,7 @@ void generator()
 
 
     ofstream fileStrmOut("file.bin",ios::binary);
-    for(int i=0;i<1024;i++)
+    for(int i=0;i<1073741824;i++)
     {
         a=gen();
         fileStrmOut.write((char*)&a,sizeof(int));
@@ -85,8 +53,8 @@ void generator()
     /*ifstream in2("file.bin",ios::binary);
     while(in2.read((char*)&a,sizeof(int)))
     cout<<a<<" ";
-    in2.close();*/
-
+    in2.close();
+*/
 }
 
 void Sort(int m[],int n)
