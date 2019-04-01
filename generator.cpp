@@ -5,11 +5,15 @@
 #include <ctime>
 using namespace std;
 
-extern int sizebigfile;
+extern unsigned int sizebigfile=1073741824;
 
 void generator()
 {
     unsigned int a;
+    //cout<<"enter the size of input file (Gb)\n";
+    //cin>>sizebigfile;
+    //sizebigfile=(sizebigfile*1073741824)/4;
+    cout<<"Loading...\n";
 
     mt19937 gen;
     gen.seed(time(0));

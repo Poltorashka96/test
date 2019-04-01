@@ -9,8 +9,7 @@
 #include "testsort.h"
 
 using namespace std;
-
-extern  int sizebigfile=1073741824;
+extern unsigned int sizebigfile;
 void Sort(string namefile1,string namefile2,string nameoutfile);
 
 int main()
@@ -47,8 +46,7 @@ int main()
                 k++;
         }
 
-
-        ifstream filein("file"+to_string(k-1)+".bin");
+        ifstream filein("file"+to_string(k-1)+".bin",ios::binary);
         ofstream fileout("fileout.bin",ios::binary);
         while(filein){
               filein.read((char*)&b,sizeof(int));
