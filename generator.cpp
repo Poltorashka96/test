@@ -3,26 +3,38 @@
 #include <fstream>
 #include <random>
 #include <ctime>
+#include <thread>
 using namespace std;
 
-extern unsigned int sizebigfile=1073741824;
+extern unsigned int INPUT_FILE_SIZE = 1024 * 1024 * 1024;//количество int переменных, которые помест€тс€ в 4√б
 
 void generator()
 {
-    unsigned int a;
-    //cout<<"enter the size of input file (Gb)\n";
-    //cin>>sizebigfile;
-    //sizebigfile=(sizebigfile*1073741824)/4;
+    unsigned int tmp;
     cout<<"Loading...\n";
 
     mt19937 gen;
     gen.seed(time(0));
-    ofstream fileStrmOut("file.bin",ios::binary);
-    for(int i=0;i<sizebigfile;i++)
-    {
-        a=gen();
-        fileStrmOut.write((char*)&a,sizeof(int));
+
+    ofstream inputFileStrmOut("inputfile.bin", ios::binary);
+    if(inputFileStrmOut.is_open()){
+        cout<< "Input file is open for writing\n";
     }
-    fileStrmOut.close();
+    else {
+            cout<< "Input file is not open for writing\n";
+    }
+
+    for(int i = 0; i < INPUT_FILE_SIZE; i++)
+    {
+        tmp = gen();
+        inputFileStrmOut.write((char*)&tmp, sizeof(int));
+    }
+
+    inputFileStrmOut.close();
 }
+
+
+
+
+
 
